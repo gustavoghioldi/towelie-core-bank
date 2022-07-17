@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'accounts',
     'clients',
     'exchange',
+    'funds',
     'ledgers',
     'loans',
     'meta',
