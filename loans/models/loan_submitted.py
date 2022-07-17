@@ -1,0 +1,2 @@
+class LoanSubmitted(AbstractModel):
+    pass
