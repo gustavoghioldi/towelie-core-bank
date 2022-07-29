@@ -39,13 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     ## libs ###
     'rest_framework',
+    'django_q',
     ### apps ###
     'master',
     'accounts',
     'clients',
     'exchange',
     'funds',
-    'ledgers',
     'loans',
     'meta',
     'org',

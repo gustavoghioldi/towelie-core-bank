@@ -1,4 +1,5 @@
 from django.db import models
+from app.master.models.abstract_model import AbstractModel
 from master.models.currency import Currency
 from master.enums.general import (
     AmortizationType,
@@ -8,6 +9,14 @@ from master.enums.general import (
     RepaymenthStrategy,
     DayInYears,
     )
+
+
+class LoanRefiProduct(AbstractModel):
+    pass
+
+#TODO: BaloonPayment
+# class LonBaloonProduct(AbstractModel):
+#    pass <-- preguntar a Allen para implementar. 
 
 class LoanProduct(models.Model):
     name = models.CharField(max_length=128)
@@ -29,6 +38,7 @@ class LoanProduct(models.Model):
     interes_calculation_period = models.CharField(max_length=64, choices= InteresCalculationPeriod.choices)
     repaymenth_strategy = models.CharField(max_length=64, choices=RepaymenthStrategy.choices)
     interest_free_period = models.SmallIntegerField(default=0)
-    days_in_years = models.CharField(max_length=8, choices=DayInYears.choices)
-    day_in_month  = models.CharField(max_length=8, choices=DayInMonth.choices)
-    
+    days_in_years        = models.CharField(max_length=8, choices=DayInYears.choices)
+    day_in_month         = models.CharField(max_length=8, choices=DayInMonth.choices)
+
+

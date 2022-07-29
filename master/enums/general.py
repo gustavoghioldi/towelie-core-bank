@@ -33,4 +33,3 @@ class DayInYears(models.TextChoices):
 class DayInMonth(models.TextChoices):
     _30    = '30'
     ACTUAL = 'ACTUAL'
-
