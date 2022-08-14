@@ -4,18 +4,11 @@ from rest_framework.response import Response
 from clients.serializers.new_client_serializer import NewClientCreateSerializer, NewClientValidateEmailSerializer
 from rest_framework import status
 from django.contrib.auth import get_user_model
-
+from clients.models.client import Client
+from clients.models.client_eav import ClientEAV
 logger = logging.getLogger(__name__)
 
 class NewClientView(APIView):
-    """
-    View to list all users in the system.
-
-    * Requires token authentication.
-    * Only admin users are able to access this view.
-    """
-    # authentication_classes = [authentication.TokenAuthentication]
-    # permission_classes = [permissions.IsAdminUser]
 
     def post(self, request, format=None):
         serializer = NewClientCreateSerializer(data=request.data)
@@ -30,11 +23,11 @@ class NewClientView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request, format=None):
-        serializer = NewClientValidateEmailSerializer(data=
-        {
+        serializer = NewClientValidateEmailSerializer(data={
             "username": request.query_params.get("username"),
             "uuid":request.query_params.get("uuid")
         })
         if serializer.is_valid():
+            Client.objects.create(user=serializer._signup_user)
             return Response(status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
