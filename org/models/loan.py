@@ -1,5 +1,5 @@
 from django.db import models
-from app.master.models.abstract_model import AbstractModel
+from master.models.abstract_model import AbstractModel
 from master.models.currency import Currency
 from master.enums.general import (
     AmortizationType,

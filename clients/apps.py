@@ -6,5 +6,5 @@ class ClientConfig(AppConfig):
     name = 'clients'
 
     def ready(self) -> None:
-        from .models import client_account
+        from .models import client_account, client_eav, client_meta, signup
         return super().ready()
