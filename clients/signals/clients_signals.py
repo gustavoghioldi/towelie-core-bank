@@ -20,7 +20,7 @@ def client_post_save(sender, instance, created, **kwargs):
         ClientEAV.objects.create(
                 entity=instance,
                 attribute='CREATE',
-                value=True
+                value=1
             )
 
         #delete Signup TODO: signal when create ClientEAV

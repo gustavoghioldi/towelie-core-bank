@@ -5,23 +5,39 @@ from clients.models.client import Client
 from clients.models.client_eav import ClientEAV
 from clients.models.signup import Signup
 
-# Register your models here.
-
+### Client
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('client_user_username', 'client_user_name', 'is_active_client')
+    
+    @admin.display(description='Client')
+    def client_user_username(self, obj):
+        return obj.user.username
+        
+    @admin.display(description='Name')
+    def client_user_name(self, obj):
+        return f'{obj.user.first_name} {obj.middle_name} {obj.user.last_name}' 
+
+    @admin.display(description='Active Client')
+    def is_active_client(self, obj):
+        return True if obj.activation_date else False
+
+## ClientEAV
 @admin.register(ClientEAV)
 class ClientEAVAdmin(admin.ModelAdmin):
     list_display = ('client_user_username', 'attribute', 'value')
+    list_filter = ('entity','attribute', 'value')
 
     @admin.display(description='Client')
     def client_user_username(self, obj):
         return obj.entity.user.username
 
+### ClientAccount
 @admin.register(ClientAccount)
 class ClientAccountAdmin(admin.ModelAdmin):
     pass
 
+### SIGNUP
 @admin.register(Signup)
 class SignupAdmin(admin.ModelAdmin):
     pass

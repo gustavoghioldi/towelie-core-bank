@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-f(%*=m#cvw*x@!#wzl#*qw+tu42w1soe2=lm*m6d40(u#thjin'
+SECRET_KEY = os.environ.get('SECRET_KEY','django-insecure-f(%*=m#cvw*x@!#wzl#*qw+tu42w1soe2=lm*m6d40(u#thjin')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -139,6 +139,18 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
 ### CUSTOM ENV VARS ###
 FIRST_ADMIN_USERNAME = os.environ.get('FIRST_ADMIN_USERNAME', 'admin')
 FIRST_ADMIN_PASSWORD = os.environ.get('FIRST_ADMIN_PASSWORD', 'admin')
+
+### EMAIL ###
+EMAIL_APIKEY = os.environ.get('EMAIL_APIKEY', 'coso_cosito')
+
+### APP ENV VARIABLES CLIENTS ###
+CLIENT_VERIFICATION_EMAIL_TIME = int(os.environ.get('CLIENT_VERIFICATION_EMAIL_TIME', 1))

@@ -5,7 +5,6 @@ from clients.serializers.new_client_serializer import NewClientCreateSerializer,
 from rest_framework import status
 from django.contrib.auth import get_user_model
 from clients.models.client import Client
-from clients.models.client_eav import ClientEAV
 logger = logging.getLogger(__name__)
 
 class NewClientView(APIView):
