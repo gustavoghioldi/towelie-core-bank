@@ -15,5 +15,6 @@ class ClientView(APIView):
     def patch(self, request, format=None):
         serializer =  ClientPATCHSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            # serializer.update(instance, serializer.data)
+            return Response(serializer.errors,  status=status.HTTP_202_ACCEPTED)  
         return Response(serializer.errors,  status=status.HTTP_400_BAD_REQUEST)    
