@@ -1,7 +1,7 @@
 from django.contrib import admin
 from clients.models.client_account import ClientAccount
 
-from clients.models.client import Client
+from clients.models.client import Client, ClientIds, ClientAddresses
 from clients.models.client_eav import ClientEAV
 from clients.models.signup import Signup
 
@@ -40,5 +40,16 @@ class ClientAccountAdmin(admin.ModelAdmin):
 ### SIGNUP
 @admin.register(Signup)
 class SignupAdmin(admin.ModelAdmin):
+    pass
+
+### IDS
+@admin.register(ClientIds)
+class ClientIdsAdmin(admin.ModelAdmin):
+    pass
+
+
+### Addresses
+@admin.register(ClientAddresses)
+class ClientAddressesAdmin(admin.ModelAdmin):
     pass
 
