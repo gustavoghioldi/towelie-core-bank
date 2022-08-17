@@ -1,5 +1,4 @@
 from django.contrib import admin
-from clients.models.client_account import ClientAccount
 
 from clients.models.client import Client, ClientIds, ClientAddresses
 from clients.models.client_eav import ClientEAV
@@ -31,11 +30,6 @@ class ClientEAVAdmin(admin.ModelAdmin):
     @admin.display(description='Client')
     def client_user_username(self, obj):
         return obj.entity.user.username
-
-### ClientAccount
-@admin.register(ClientAccount)
-class ClientAccountAdmin(admin.ModelAdmin):
-    pass
 
 ### SIGNUP
 @admin.register(Signup)

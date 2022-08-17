@@ -1,9 +1,8 @@
 from django.db import models
-from accounts.tasks.account_ledger_receiver import account_ledger_receiver_post_save, account_ledger_receiver_pre_save
 from clients.models.client import Client
 from org.models.account import AccountProduct
 from master.models.abstract_model import AbstractModel, decimal_field
-
+from django.core.exceptions import ValidationError
 class AccountLedgerChangeType(models.TextChoices):
     DEBIT  = "DEBIT"
     CREDIT = "CREDIT"
@@ -11,6 +10,7 @@ class AccountLedgerChangeType(models.TextChoices):
 class ClientAccount(AbstractModel):
     client  = models.ForeignKey(Client, on_delete=models.DO_NOTHING)
     account = models.ForeignKey(AccountProduct, on_delete=models.DO_NOTHING, related_name='client_account_account')
+    balance = decimal_field
 
 class ClientAccountLedger(AbstractModel):
     client_account = models.ForeignKey(ClientAccount, on_delete=models.DO_NOTHING)
@@ -19,8 +19,10 @@ class ClientAccountLedger(AbstractModel):
     amount = decimal_field
     comment = models.TextField()
 
+    def clean(self):
+        if self.client_account.balance - self.balance < 0:
+            raise ValidationError(f"the account balance cannot be less than 0, currently it is {self.client_account.balance }")
+        super(ClientAccountLedger, self).clean()
+
 # class FundAccount(models.Model):
     # client = models.ForeignKey(Client, on_delete=models.DO_NOTHING)
-    
-models.signals.pre_save.connect(sender=ClientAccountLedger, receiver=account_ledger_receiver_pre_save)
-models.signals.post_save.connect(sender=ClientAccountLedger, receiver=account_ledger_receiver_post_save)
