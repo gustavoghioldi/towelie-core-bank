@@ -6,8 +6,8 @@ from org.models.office import Office
 
 @admin.register(AccountProduct)
 class AccountProductAdmin(admin.ModelAdmin):
-    pass
-
+    list_display = ('uuid', 'name', 'short_name', 'currency',)
+    
 @admin.register(Channel)
 class ChannelAdmin(admin.ModelAdmin):
     pass

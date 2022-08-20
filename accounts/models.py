@@ -3,6 +3,7 @@ from clients.models.client import Client
 from org.models.account import AccountProduct
 from master.models.abstract_model import AbstractModel, decimal_field
 from django.core.exceptions import ValidationError
+
 class AccountLedgerChangeType(models.TextChoices):
     DEBIT  = "DEBIT"
     CREDIT = "CREDIT"
@@ -11,6 +12,7 @@ class ClientAccount(AbstractModel):
     client  = models.ForeignKey(Client, on_delete=models.DO_NOTHING)
     account = models.ForeignKey(AccountProduct, on_delete=models.DO_NOTHING, related_name='client_account_account')
     balance = decimal_field
+    overdraw = models.DecimalField(max_digits=48, decimal_places=16, default=0.0)
 
 class ClientAccountLedger(AbstractModel):
     client_account = models.ForeignKey(ClientAccount, on_delete=models.DO_NOTHING)

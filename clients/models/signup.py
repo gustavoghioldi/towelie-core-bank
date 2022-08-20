@@ -9,7 +9,7 @@ from django.dispatch import receiver
 
 logger = logging.getLogger(__name__)
 class Signup(AbstractModel):
-    user = models.ForeignKey(User, unique=True ,on_delete=models.CASCADE)
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
     expires_at = models.DateTimeField()
 
 

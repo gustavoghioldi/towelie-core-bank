@@ -21,7 +21,7 @@ class LoanRefiProduct(AbstractModel):
 class LoanProduct(models.Model):
     name = models.CharField(max_length=128)
     short_name = models.CharField(max_length=16)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     start_date  = models.DateField()
     close_date  = models.DateField()
     currency    = models.ForeignKey(Currency, on_delete=models.CASCADE)
