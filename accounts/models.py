@@ -15,6 +15,22 @@ class ClientAccount(AbstractModel):
     default_collector = models.BooleanField(default=False)
     overdraw = models.DecimalField(max_digits=48, decimal_places=16, default=0.0)
 
+    def clean(self) -> None:
+        self._validation_errors()
+        return super().clean()
+        
+    def save(self, *args, **kwargs):
+        self._validation_errors()
+        super().save(*args, **kwargs)
+
+    def _validation_errors(self):
+        #valida que la cuenta pueda ser recaudadora
+        if self.default_collector and not self.account.collector:
+            raise ValidationError(f"{self.account} isn`t collector account product")
+        #valida que el monto maximo de sobregiro este permitido en este tipo de cuentas
+        if self.account.max_overdraw < self.overdraw:
+            raise ValidationError(f"{self.account} max overdraw is {float(self.account.max_overdraw)} ")     
+            
 class ClientAccountLedger(AbstractModel):
     client_account = models.ForeignKey(ClientAccount, on_delete=models.DO_NOTHING)
     account_ledger_change_type = models.CharField(max_length=128, choices=AccountLedgerChangeType.choices) 
@@ -23,9 +39,10 @@ class ClientAccountLedger(AbstractModel):
     comment = models.TextField()
 
     def clean(self):
-        if self.client_account.balance - self.balance < 0:
-            raise ValidationError(f"the account balance cannot be less than 0, currently it is {self.client_account.balance }")
-        super(ClientAccountLedger, self).clean()
+        if self.account_ledger_change_type == 'DEBIT':
+            if self.client_account.balance - self.balance < self.client_account.overdraw:
+                raise ValidationError(f"the account balance cannot be less than 0, currently it is {self.client_account.balance }")
+            super(ClientAccountLedger, self).clean()
 
 # class FundAccount(models.Model):
     # client = models.ForeignKey(Client, on_delete=models.DO_NOTHING)

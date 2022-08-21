@@ -11,6 +11,9 @@ class Client(AbstractModel):
     country_nationality = models.ForeignKey(Country, on_delete=models.DO_NOTHING, blank=True, null=True, related_name='country_nationality')
     country_residence = models.ForeignKey(Country, on_delete=models.DO_NOTHING, blank=True, null=True, related_name='country_residence')
 
+    def __str__(self):
+        return self.user.username
+        
     @property
     def addresses(self):
         pass
