@@ -9,6 +9,7 @@ class RepayEvery(models.TextChoices):
     DAY   = 'DAY'
     WEEK  = 'WEEK'
     MONTH = 'MONTH'
+    FINAL = 'FINAL'
 
 class AmortizationType(models.TextChoices):
     EQUALS_INSTALLMENTS     = 'EQUALS_INSTALLMENTS'
@@ -28,7 +29,7 @@ class RepaymenthStrategy(models.TextChoices):
 class DayInYears(models.TextChoices):
     _360 = '360'
     _364 = '364'
-    _356 = '365'
+    _365 = '365'
 
 class DayInMonth(models.TextChoices):
     _30    = '30'

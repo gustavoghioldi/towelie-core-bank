@@ -3,4 +3,5 @@ class PaymentsCalculatorService:
     @staticmethod
     def payments(loan):
         #TODO: que funcione para mas casos de uso
-        return loan.balance/loan.number_of_repayments
+        total = loan.principal * (1 + loan.loan_product.nominal_interes_rate/100)
+        return total/loan.number_of_repayments

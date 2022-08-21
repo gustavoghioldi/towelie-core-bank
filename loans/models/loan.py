@@ -20,10 +20,10 @@ class Loan(AbstractModel):
     approved             = models.ForeignKey(LoanApproved, on_delete=models.DO_NOTHING, null=True, blank=True)
     submitted            = models.ForeignKey(LoanSubmitted, on_delete=models.DO_NOTHING, null=True, blank=True)
     disbursement         = models.ForeignKey(LoanDisbursement, on_delete=models.DO_NOTHING, null=True, blank=True)
-    principal            = decimal_field
+    principal            = models.DecimalField(max_digits=48, decimal_places=16, default=0.0)
     number_of_repayments = models.SmallIntegerField()
     first_repayment_on   = models.DateField()
-    
+
     def clean(self) -> None:
         self._validation_errors()
         return super().clean()
@@ -39,6 +39,10 @@ class Loan(AbstractModel):
         #validar cantidad minima de cuotas
         if self.loan_product.repayments_min > self.number_of_repayments:
             raise ValidationError(f'Min repayments for {self.loan_product.name} is {self.loan_product.repayments_min} repayment')
-
-        # valirar max amount
-        # valiar min amount    
+        # validar maxio credito del cliente
+        # valirar min amount
+        if self.loan_product.principal_min > self.principal:
+            raise ValidationError(f'Min principal for {self.loan_product.name} is {self.loan_product.principal_min}')
+        # valiar max amount
+        if self.loan_product.principal_max < self.principal:
+            raise ValidationError(f'Max principal for {self.loan_product.name} is {self.loan_product.principal_max}')

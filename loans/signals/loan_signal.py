@@ -9,19 +9,17 @@ logger = logging.getLogger(__name__)
 
 @receiver(pre_save, sender=Loan)
 def loan_receiver_pre_save(sender, instance:Loan, **kwargs):
+    #TODO: validar todo
     pass
-
        
 @receiver(post_save, sender=Loan)
 def loan_receiver_post_save(sender, instance: Loan, created, **kwargs):
     if created:
         _create_loan_ledger(instance)
 
-
 def _create_loan_ledger(instance: Loan)->None:
     payments = list(range(1, instance.number_of_repayments+1))
     next_repayment = instance.first_repayment_on
-
     payment_amount = PaymentsCalculatorService.payments(instance)
 
     for i in payments:

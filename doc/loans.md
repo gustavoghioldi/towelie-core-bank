@@ -12,6 +12,6 @@ submitedd -> Approved -> disbursement
 
 Una vez submiteado el prestamo, se debe crear una tabla con uun registro por cuota, todo moviemiento dentro de ese prestamo debe ser registrado en esta tabla (Loan Ledger)
 
-para la primera version solo admite pagos totales de las cuotas. 
-
+para la primera version:
+- solo admite pagos totales de las cuotas.
 

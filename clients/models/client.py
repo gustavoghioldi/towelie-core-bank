@@ -62,7 +62,6 @@ class ClientAddresses(AbstractModel):
     state       = models.CharField(max_length=16)
     country     = models.CharField(max_length=3)
     primary     = models.BooleanField(default=False)
-
     class Meta:
         verbose_name_plural = 'Clients Addresses'
 
