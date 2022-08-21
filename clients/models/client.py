@@ -2,13 +2,14 @@ from master.models.abstract_model import AbstractModel
 from django.db import models
 from django.contrib.auth.models import User
 from django.forms.models import model_to_dict
+from master.models.country import Country
 
 class Client(AbstractModel):
     user              = models.OneToOneField(User, on_delete=models.CASCADE)
     middle_name       = models.CharField(max_length=100, blank=True, null=True)
     activation_date   = models.DateField(null=True, blank=True)
-    country_nationality = models.CharField(max_length=3, null=True, blank=True)
-    country_residence = models.CharField(max_length=3, null=True, blank=True)
+    country_nationality = models.ForeignKey(Country, on_delete=models.DO_NOTHING, blank=True, null=True, related_name='country_nationality')
+    country_residence = models.ForeignKey(Country, on_delete=models.DO_NOTHING, blank=True, null=True, related_name='country_residence')
 
     @property
     def addresses(self):
@@ -59,6 +60,9 @@ class ClientAddresses(AbstractModel):
     country     = models.CharField(max_length=3)
     primary     = models.BooleanField(default=False)
 
+    class Meta:
+        verbose_name_plural = 'Clients Addresses'
+
 class ClientIds(AbstractModel):
     client      = models.ForeignKey(Client, on_delete=models.CASCADE)
     type        = models.CharField(max_length=16)
@@ -66,4 +70,5 @@ class ClientIds(AbstractModel):
     country     = models.CharField(max_length=3)    
 
     class Meta:
+        verbose_name_plural = 'Clients IDs'
         unique_together = ('client', 'type', 'country')

@@ -12,6 +12,7 @@ class ClientAccount(AbstractModel):
     client  = models.ForeignKey(Client, on_delete=models.DO_NOTHING)
     account = models.ForeignKey(AccountProduct, on_delete=models.DO_NOTHING, related_name='client_account_account')
     balance = decimal_field
+    default_collector = models.BooleanField(default=False)
     overdraw = models.DecimalField(max_digits=48, decimal_places=16, default=0.0)
 
 class ClientAccountLedger(AbstractModel):

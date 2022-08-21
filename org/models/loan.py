@@ -1,5 +1,6 @@
 from django.db import models
 from master.models.abstract_model import AbstractModel
+from master.models.country import Country
 from master.models.currency import Currency
 from master.enums.general import (
     AmortizationType,
@@ -25,6 +26,7 @@ class LoanProduct(models.Model):
     start_date  = models.DateField()
     close_date  = models.DateField()
     currency    = models.ForeignKey(Currency, on_delete=models.CASCADE)
+    country     = models.ForeignKey(Country, on_delete=models.DO_NOTHING)
     amount_multiples = models.IntegerField()
     principal_max = models.DecimalField(max_digits=48, decimal_places=16)
     principal_min = models.DecimalField(max_digits=48, decimal_places=16)
