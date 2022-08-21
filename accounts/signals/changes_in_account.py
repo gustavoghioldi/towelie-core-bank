@@ -23,3 +23,4 @@ def _default_collector(instance):
             if i.uuid != instance.uuid:
                 i.default_collector = False
                 i.save()
+                
