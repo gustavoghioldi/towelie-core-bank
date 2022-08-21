@@ -6,5 +6,6 @@ class AccountsConfig(AppConfig):
     name = 'accounts'
 
     def ready(self) -> None:
-        from accounts.signals import move_in_account_ledger
+        from accounts.signals import move_in_account_ledger, changes_in_account
         return super().ready()
+        

@@ -3,8 +3,9 @@ from django.contrib import admin
 from accounts.models import ClientAccountLedger, ClientAccount
 from accounts.forms.admin.client_account_ledger_form import ClientAccountLedgerForm
 @admin.register(ClientAccount)
+
 class ClientAccountAdmin(admin.ModelAdmin):
-    list_display = ('uuid','get_client', 'get_account', 'get_currency_name','get_balance', )
+    list_display = ('uuid','get_client', 'get_account', 'get_currency_name','get_balance', 'default_collector' )
     list_filter = ('account__name', 'account__currency__name', )
 
     @admin.display(description="client")
