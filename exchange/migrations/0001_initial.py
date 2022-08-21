@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('source', models.CharField(max_length=64)),
-                ('curreny', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='currency', to='master.currency')),
+                ('currency', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='currency', to='master.currency')),
                 ('reference_currency', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='reference_currency', to='master.currency')),
             ],
             options={
