@@ -154,3 +154,42 @@ EMAIL_APIKEY = os.environ.get('EMAIL_APIKEY', 'coso_cosito')
 
 ### APP ENV VARIABLES CLIENTS ###
 CLIENT_VERIFICATION_EMAIL_TIME = int(os.environ.get('CLIENT_VERIFICATION_EMAIL_TIME', 1))
+
+
+LOGGING = {
+    'version': 1,  # the dictConfig format version
+    'disable_existing_loggers': False,  # retain the default loggers
+
+    # Define the formatters
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} [{module}] [{process:d}] [{thread:d}]: {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+
+    # Define the handlers
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+    },
+    # Define the loggers
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'WARN',
+            'propagate': True,
+        },
+        'exchange': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
