@@ -46,3 +46,6 @@ class Loan(AbstractModel):
         # valiar max amount
         if self.loan_product.principal_max < self.principal:
             raise ValidationError(f'Max principal for {self.loan_product.name} is {self.loan_product.principal_max}')
+        # validar si el cliente esta activo
+        if not self.client.activation_date:
+            raise ValidationError(f'Client {self.client.user.username} is not active')  

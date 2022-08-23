@@ -9,6 +9,7 @@ from loans.models.loan import Loan
 @admin.register(LoanLedger)
 class LoanLedgerAdmin(admin.ModelAdmin):
     list_display = ('uuid', 'loan', 'payment', 'payment_date', 'payment_amount', 'paid_out', )
+
 @admin.register(Loan)
 class LoanAdmin(admin.ModelAdmin):
     pass
