@@ -1,3 +1,4 @@
+from tkinter.tix import Balloon
 from django.db import models
 from clients.models.client import Client
 from org.models.account import AccountProduct
@@ -36,7 +37,7 @@ class ClientAccountLedger(AbstractModel):
     account_ledger_change_type = models.CharField(max_length=128, choices=AccountLedgerChangeType.choices) 
     account_ledger_change_reason = models.CharField(max_length=24)
     amount = decimal_field
-    comment = models.TextField()
+    comment = models.TextField(null=True, blank=True)
 
     def clean(self):
         if self.account_ledger_change_type == 'DEBIT':

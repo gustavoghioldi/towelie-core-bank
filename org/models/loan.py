@@ -43,4 +43,5 @@ class LoanProduct(models.Model):
     days_in_years        = models.CharField(max_length=8, choices=DayInYears.choices)
     day_in_month         = models.CharField(max_length=8, choices=DayInMonth.choices)
 
-
+    def __str__(self):
+        return self.name
