@@ -154,3 +154,58 @@ EMAIL_APIKEY = os.environ.get('EMAIL_APIKEY', 'coso_cosito')
 
 ### APP ENV VARIABLES CLIENTS ###
 CLIENT_VERIFICATION_EMAIL_TIME = int(os.environ.get('CLIENT_VERIFICATION_EMAIL_TIME', 1))
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+     'formatters': {
+        'console': {
+            # exact format is not important, this is the minimum information
+            'format': '[%(asctime)s] "%(name)s %(levelname)s" | %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'console',
+        },
+        'newrelic': {
+            'class': 'app.logger.nr_handler.NRHandler',
+            'formatter': 'console'
+        }
+    },
+    'loggers': {
+        'root': {
+            'handlers': [ 'console'],
+            'level': 'DEBUG',
+        },
+        'loans': {
+            'handlers': [ 'newrelic'],
+            'level': 'DEBUG',
+    },
+        'clients': {
+            'handlers': [ 'newrelic'],
+            'level': 'DEBUG',
+    },
+
+        'accounts': {
+            'handlers': [ 'newrelic'],
+            'level': 'DEBUG',
+    },
+        'api': {
+            'handlers': [ 'newrelic'],
+            'level': 'DEBUG',
+    },
+        'services': {
+            'handlers': [ 'newrelic'],
+            'level': 'DEBUG',
+    }
+    }
+    
+}
+
+NEW_RELIC_APP_NAME = "towelie local"
+NEW_RELIC_APPLICATION_LOGGING_ENABLED = True
+NEW_RELIC_APPLICATION_LOGGING_FORWARDING_ENABLED = True
+NEW_RELIC_DISTRIBUTED_TRACING_ENABLED = True
+NEW_RELIC_LOG = 'stdout'
