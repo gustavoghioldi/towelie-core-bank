@@ -1,5 +1,5 @@
 from loans.models.loan import Loan
-from master.models.abstract_model import AbstractModel, decimal_field
+from master.models.abstract_model import AbstractModel
 from django.db import models
 
 class LoanLedger(AbstractModel):
