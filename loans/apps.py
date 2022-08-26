@@ -6,6 +6,6 @@ class LoansConfig(AppConfig):
     name = 'loans'
 
     def ready(self) -> None:
-        from loans.models import loan, loan_purpose, loan_ledger
-        from loans.signals import loan_ledger_signal, loan_signal
+        from loans.models import loan, loan_purpose, loan_ledger, loan_status
+        from loans.signals import loan_ledger_signal, loan_signal, loan_status_signal
         return super().ready()
