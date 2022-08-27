@@ -20,6 +20,7 @@ def loan_receiver_post_save(sender, instance: Loan, created, **kwargs):
         _create_loan_ledger(instance)
         if instance.status != LoanCycleLifeStatus.SUBMITTED:
             raise ValidationError(f'SUBMITTED is only accepted as status when creating a new loan')
+
 def _create_loan_ledger(instance: Loan)->None:
     payments = list(range(1, instance.number_of_repayments+1))
     next_repayment = instance.first_repayment_on
