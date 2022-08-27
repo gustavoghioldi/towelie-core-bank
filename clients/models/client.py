@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.forms.models import model_to_dict
 from master.models.country import Country
+from django.core.exceptions import ValidationError
 
 class Client(AbstractModel):
     user              = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -54,22 +55,39 @@ class Client(AbstractModel):
     @property
     def client_addresses(self):
         return ClientAddresses.objects.filter(client=self.uuid).values()
-        
+
+class ClientAddressType(models.TextChoices):
+    HOME        = "HOME"
+    BUSINESS    = "BUSINESS"
+    BILLING     = "BILLING"
+    SHIPPING    = "SHIPPING"
+    CONTRACT    = "CONTRACT"
+    RECIPIENT   = "RECIPIENT"
+
 class ClientAddresses(AbstractModel):
     client      = models.ForeignKey(Client, on_delete=models.CASCADE)
-    type        = models.CharField(max_length=16)
+    type        = models.CharField(choices=ClientAddressType.choices, max_length=16)
     description = models.TextField()
     state       = models.CharField(max_length=16)
-    country     = models.CharField(max_length=3)
+    country     = models.ForeignKey(Country,  on_delete=models.DO_NOTHING)
+    city        =  models.CharField(max_length=128)
     primary     = models.BooleanField(default=False)
     class Meta:
         verbose_name_plural = 'Clients Addresses'
 
+    def clean(self) -> None:
+        self._validation_errors()
+        return super().clean()
+
+    def _validation_errors(self):
+        if self.primary:
+            if ClientAddresses.objects.filter(client=self.client).count()  > 0:
+                raise ValidationError('Client have primry address')
 class ClientIds(AbstractModel):
     client      = models.ForeignKey(Client, on_delete=models.CASCADE)
     type        = models.CharField(max_length=16)
     id          = models.CharField(max_length=32)
-    country     = models.CharField(max_length=3)    
+    country     = models.ForeignKey(Country,  on_delete=models.DO_NOTHING)    
 
     class Meta:
         verbose_name_plural = 'Clients IDs'
