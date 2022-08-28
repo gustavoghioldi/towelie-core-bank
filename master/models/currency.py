@@ -1,9 +1,9 @@
 from django.db import models
 from master.models.abstract_model import AbstractModel
 
-class Currency(AbstractModel):
+class Currency(models.Model):
     name           = models.CharField(max_length=24, unique=True)
-    iso_code       = models.CharField(max_length=3, unique=True)
+    iso_code       = models.CharField(max_length=3, primary_key=True)
     symbol         = models.CharField(max_length=3, default="$")
     decimal_places = models.SmallIntegerField(default=2)
 

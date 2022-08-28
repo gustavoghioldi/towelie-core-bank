@@ -9,6 +9,6 @@ class AccountProduct(AbstractModel):
     default_overdraw  = models.DecimalField(max_digits=48, decimal_places=16, default=0.0)
     max_overdraw      = models.DecimalField(max_digits=48, decimal_places=16, default=0.0)
     collector      = models.BooleanField(default=False)
-
+    
     def __str__(self):
         return self.name

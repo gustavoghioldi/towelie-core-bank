@@ -7,7 +7,7 @@ from master.models.identifier import Identifier
 # Register your models here.
 @admin.register(Currency)
 class CurrencyAdmin(admin.ModelAdmin):
-    list_display = ('uuid', 'iso_code' ,'name', 'symbol', )
+    list_display = ('iso_code' ,'name', 'symbol', )
     
 @admin.register(Country)
 class CountryAdmin(admin.ModelAdmin):
