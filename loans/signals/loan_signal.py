@@ -6,6 +6,7 @@ from django.dispatch import receiver
 from dateutil.relativedelta import *
 from loans.services.payments_calculator_service import PaymentsCalculatorService
 from django.core.exceptions import ValidationError
+from loans.helpers.loan_calculate_helper import LoanCalculateHelper
 
 logger = logging.getLogger(__name__)
 
@@ -20,16 +21,16 @@ def loan_receiver_post_save(sender, instance: Loan, created, **kwargs):
         _create_loan_ledger(instance)
         if instance.status != LoanCycleLifeStatus.SUBMITTED:
             raise ValidationError(f'SUBMITTED is only accepted as status when creating a new loan')
+
 def _create_loan_ledger(instance: Loan)->None:
     payments = list(range(1, instance.number_of_repayments+1))
     next_repayment = instance.first_repayment_on
-    payment_amount = PaymentsCalculatorService.payments(instance)
-
+    lch = LoanCalculateHelper(instance.principal, instance.number_of_repayments, instance.nominal_interes_rate)
     for i in payments:
         LoanLedger.objects.create(
             loan=instance,
             payment=i,
             payment_date = next_repayment,
-            payment_amount = payment_amount
+            payment_amount = lch.get_payment_detail().get('payment_value')
         )
         next_repayment += relativedelta(months=1)

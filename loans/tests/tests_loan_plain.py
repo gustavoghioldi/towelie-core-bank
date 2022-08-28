@@ -1,4 +1,3 @@
-from distutils.log import debug
 from django.test import TestCase
 from loans.tests.set_up_data import create_users_and_clients
 
