@@ -1,4 +1,3 @@
-from dataclasses import fields
 import logging
 from rest_framework import serializers
 from clients.models.client import Client, ClientAddresses, ClientIds
