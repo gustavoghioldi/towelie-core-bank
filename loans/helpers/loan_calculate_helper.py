@@ -1,8 +1,8 @@
 class LoanCalculateHelper:
-    def __init__(self, principal, payments, tea) -> None:
+    def __init__(self, principal, payments, tea, fee=0, ) -> None:
         self.principal = principal
         self.payments = payments
-        self.tea      = tea
+        self.tea      = tea + fee
 
 
     def get_tem(self):
@@ -33,10 +33,16 @@ class LoanCalculateHelper:
 
         return monto * ( (tasa * ((1 + tasa)**cuotas)) / (((1 + tasa)**cuotas) - 1) )
 
+    def get_payment_interest(self):
+        return (self.get_payment_value()*self.payments)-self.principal
+
+    def get_loan_total(self):
+        return self.get_payment_value()*self.payments
+
     def get_payment_detail(self):
         return {
                 "tem" : round(self.get_tem(), 4)*100,
                 "payment_value": round(self.get_payment_value(), 2),
-                "payment_interest": round((self.get_payment_value()*self.payments)-self.principal, 2),
-                "loan_total": round(self.get_payment_value()*self.payments, 2)
+                "payment_interest": round(self.get_payment_interest(), 2),
+                "loan_total": round(self.get_loan_total(), 2)
             }

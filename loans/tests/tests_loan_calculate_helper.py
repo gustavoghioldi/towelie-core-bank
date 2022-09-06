@@ -13,7 +13,6 @@ class LoanCalculateHelperTestClass(TestCase):
         principal = 90000
         payments  = 3
         tea       = 169.4
-        
         lch = LoanCalculateHelper(90000, 3, 169.4)
         loan_detail = lch.get_payment_detail()
 
@@ -21,3 +20,15 @@ class LoanCalculateHelperTestClass(TestCase):
         self.assertEquals(loan_detail['payment_value'],35307.53)
         self.assertEquals(loan_detail['payment_interest'],15922.60)
         self.assertEquals(loan_detail['loan_total'],105922.60)
+
+
+    def test_basic_loan2(self):
+        principal = 2500
+        payments  = 12
+        tea       = 65
+        lch = LoanCalculateHelper(2500, 12, 65)
+        loan_detail = lch.get_payment_detail()
+
+        self.assertEquals(loan_detail['tem'],4.26)
+        self.assertEquals(loan_detail['payment_value'],270.44)
+

@@ -7,4 +7,6 @@ class LoanLedger(AbstractModel):
     payment = models.SmallIntegerField()
     payment_date = models.DateField()
     payment_amount =  models.DecimalField(max_digits=48, decimal_places=16, default=0.0)
+    amortization = models.DecimalField(max_digits=48, decimal_places=16, default=0.0)
+    interest = models.DecimalField(max_digits=48, decimal_places=16, default=0.0)
     paid_out = models.BooleanField(default=False)
