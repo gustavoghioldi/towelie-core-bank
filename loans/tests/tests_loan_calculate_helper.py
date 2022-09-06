@@ -13,6 +13,8 @@ class LoanCalculateHelperTestClass(TestCase):
         principal = 90000
         payments  = 3
         tea       = 169.4
+
+
         lch = LoanCalculateHelper(90000, 3, 169.4)
         loan_detail = lch.get_payment_detail()
 

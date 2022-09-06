@@ -45,5 +45,6 @@ class ClientIdsAdmin(admin.ModelAdmin):
 ### Addresses
 @admin.register(ClientAddresses)
 class ClientAddressesAdmin(admin.ModelAdmin):
-    pass
+    list_filter = ('primary', 'country', 'state',)
+    list_display = ('client', 'type', 'state', 'country', 'primary')
 

@@ -46,3 +46,4 @@ class LoanCalculateHelper:
                 "payment_interest": round(self.get_payment_interest(), 2),
                 "loan_total": round(self.get_loan_total(), 2)
             }
+
